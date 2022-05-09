@@ -72,27 +72,21 @@ export default function Dashboard(props) {
     const rpcClient = new rpc.RPCClient("http://seed1t4.neo.org:20332");
     const feedioScriptHash = "e0bd649469db432189f15cf9edbe5b1b8bd20a5f";
 
-    // const fetchLatestUpdatedTimeStamp = async (token) => {
-    //   // do your api call here
-    //   const result = await rpcClient.invokeFunction(
-    //       feedioScriptHash,
-    //       "getLatestTokenPrices",[],
-    //       [
-    //         new tx.Signer({
-    //           // account: config.account.scriptHash,
-    //           account: new wallet.Account("fb7f465e3a992594537b7b2bc4fbe80fcbbb90dcfe33a4bfc8e1f351598d4c8e").scriptHash,
-    //           scopes: tx.WitnessScope.Global,
-    //         }),
-    //       ]
-    //   );
+    const fetchLatestUpdatedTimeStamp = async (token) => {
+      // do your api call here
+      const result = await rpcClient.invokeFunction(
+          feedioScriptHash,
+          "getLastUpdatedTime",[],
+      );
 
-		// 	return JSON.parse(Neon.u.base642utf8(result.stack[0].value));
-    // }
+			return result.stack[0].value;
+    }
 
-    // fetchLatestUpdatedTimeStamp().then(function(resp) {
-    //   console.log(resp);
-    //   setLastUpdatedTimeStamp(resp);
-    // })
+    fetchLatestUpdatedTimeStamp().then(function(resp) {
+      console.log(resp);
+      const date = new Date(resp / 1);
+      setLastUpdatedTimeStamp(date.toString());
+    })
   }, []);
 
   console.log('lastUpdatedTimeStamp--', lastUpdatedTimeStamp);
