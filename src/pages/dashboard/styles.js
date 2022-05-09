@@ -1,6 +1,22 @@
 import { makeStyles } from "@material-ui/styles";
 
 export default makeStyles(theme => ({
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    display: 'flex',
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    marginLeft: 'auto',
+  },
+  disabled: {
+    backgroundColor: 'white',
+    color: 'gray',
+    opacity: 0.7,
+  },
+  flex: {
+    display: 'flex',
+  },
   card: {
     minHeight: "100%",
     display: "flex",

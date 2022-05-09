@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "@material-ui/styles";
 import {
   List,
   ListItem,
@@ -7,20 +6,16 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
-  IconButton,
 } from '@material-ui/core';
-import axios from 'axios';
 import Neon, { rpc, sc, u, wallet, tx } from "@cityofzion/neon-js";
 import useStyles from "./styles";
 
-
 export default function Dashboard(props) {
   var classes = useStyles();
-  var theme = useTheme();
   const [data, setData] = useState([]);
-
-  console.log(Neon, '---neon')
-
+  
+  const [lastUpdatedTimeStamp, setLastUpdatedTimeStamp] = useState(null);
+  
   useEffect(() => {
     // trigger API call here on page load
 
@@ -72,48 +67,59 @@ export default function Dashboard(props) {
     })
   }, []);
 
+  // get latest updated timestamp
   useEffect(() => {
-    console.log(data)
-  }, [data])
+    const rpcClient = new rpc.RPCClient("http://seed1t4.neo.org:20332");
+    const feedioScriptHash = "e0bd649469db432189f15cf9edbe5b1b8bd20a5f";
 
-  console.log('data--', data);
+    // const fetchLatestUpdatedTimeStamp = async (token) => {
+    //   // do your api call here
+    //   const result = await rpcClient.invokeFunction(
+    //       feedioScriptHash,
+    //       "getLatestTokenPrices",[],
+    //       [
+    //         new tx.Signer({
+    //           // account: config.account.scriptHash,
+    //           account: new wallet.Account("fb7f465e3a992594537b7b2bc4fbe80fcbbb90dcfe33a4bfc8e1f351598d4c8e").scriptHash,
+    //           scopes: tx.WitnessScope.Global,
+    //         }),
+    //       ]
+    //   );
 
-  const dummyData = [{
-    name: 'Bitcoin',
-    value: '$23.56',
-    icon: <Avatar src='	https://prismic-io.s3.amazonaws.com/data-chain-link/19a58483-b100-4d09-ab0d-7d221a491090_BTC.svg'/>,
-  },
-  {
-    name: 'Ethereum',
-    value: '$23444',
-    icon: <Avatar src='https://prismic-io.s3.amazonaws.com/data-chain-link/7e81db43-5e57-406d-91d9-6f2df24901ca_ETH.svg'/>,
-  },
-  {
-    name: 'Chainlink',
-    value: '$2.3',
-    icon: <Avatar src='	https://prismic-io.s3.amazonaws.com/data-chain-link/ad14983c-eec5-448e-b04c-d1396e644596_LINK.svg' />,
-  }];
+		// 	return JSON.parse(Neon.u.base642utf8(result.stack[0].value));
+    // }
+
+    // fetchLatestUpdatedTimeStamp().then(function(resp) {
+    //   console.log(resp);
+    //   setLastUpdatedTimeStamp(resp);
+    // })
+  }, []);
+
+  console.log('lastUpdatedTimeStamp--', lastUpdatedTimeStamp);
 
   return (
-    <div style={{ display: 'grid', justifyContent: 'center' }}>
-      <List style={{ display: 'flex', flexDirection: 'column', gridGap: 16, width: 600 }}>
-      {data.map((item) => {
-        return (
-          <ListItem
-            className={classes.list}
-          >  
-            <ListItemAvatar style={{ display: 'flex' }}>
-              {item.icon}
-            </ListItemAvatar>
-            <ListItemText primary={<b>{item.name}</b>}/>
-            <ListItemSecondaryAction>
-              <ListItemText primary={<b>{item.value}</b>} />
-            </ListItemSecondaryAction>
-        </ListItem>
-        )
-      })}
-      </List>
-    </div>
-    
+    <>
+      <div style={{ display: 'grid', justifyContent: 'center' }}>
+        <p><b>Last updated at: {lastUpdatedTimeStamp ? <time datetime={lastUpdatedTimeStamp}>{lastUpdatedTimeStamp}</time> : 'Data not available'}</b></p>
+        <List style={{ display: 'flex', flexDirection: 'column', gridGap: 16, width: 600 }}>
+        {data.map((item) => {
+          return (
+            <ListItem
+              className={classes.list}
+              key={item.name}
+            >  
+              <ListItemAvatar style={{ display: 'flex' }}>
+                {item.icon}
+              </ListItemAvatar>
+              <ListItemText primary={<b>{item.name}</b>}/>
+              <ListItemSecondaryAction>
+                <ListItemText primary={<b>{item.value}</b>} />
+              </ListItemSecondaryAction>
+          </ListItem>
+          )
+        })}
+        </List>
+      </div>
+    </>
   );
 }
