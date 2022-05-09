@@ -10,7 +10,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 import axios from 'axios';
-import Neon, { rpc, sc, u } from "@cityofzion/neon-js";
+import Neon, { rpc, sc, u, wallet, tx } from "@cityofzion/neon-js";
 import useStyles from "./styles";
 
 
@@ -31,33 +31,45 @@ export default function Dashboard(props) {
 
       const result = await rpcClient.invokeFunction(
           feedioScriptHash,
-          "getLatestTokenPrice", [sc.ContractParam.string(token)]
+          "getLatestTokenPrices",[],
+          [
+            new tx.Signer({
+              // account: config.account.scriptHash,
+              account: new wallet.Account("fb7f465e3a992594537b7b2bc4fbe80fcbbb90dcfe33a4bfc8e1f351598d4c8e").scriptHash,
+              scopes: tx.WitnessScope.Global,
+            }),
+          ]
       );
 
-      let resp = JSON.parse(u.base642utf8(result.stack[0].value));
-      const value = resp[1];
-      const decimals = resp[2];
-      return value / (10 ^ decimals);
+			return JSON.parse(Neon.u.base642utf8(result.stack[0].value));
     }
 
     const tokenConfigs = [
-      {"tokenKey": "NEO", "name": "NEO", "icon": <Avatar src='  https://prismic-io.s3.amazonaws.com/data-chain-link/19a58483-b100-4d09-ab0d-7d221a491090_BTC.svg'/>},
-      {"tokenKey": "GAS", "name": "GAS", "icon": <Avatar src='  https://prismic-io.s3.amazonaws.com/data-chain-link/19a58483-b100-4d09-ab0d-7d221a491090_BTC.svg'/>},
-      {"tokenKey": "BTC", "name": "Bitcoin", "icon": <Avatar src='  https://prismic-io.s3.amazonaws.com/data-chain-link/19a58483-b100-4d09-ab0d-7d221a491090_BTC.svg'/>},
-      {"tokenKey": "ETH", "name": "Ethereum", "icon": <Avatar src='  https://prismic-io.s3.amazonaws.com/data-chain-link/19a58483-b100-4d09-ab0d-7d221a491090_BTC.svg'/>},
-      {"tokenKey": "BNB", "name": "Binance Coin", "icon": <Avatar src='  https://prismic-io.s3.amazonaws.com/data-chain-link/19a58483-b100-4d09-ab0d-7d221a491090_BTC.svg'/>},
-      {"tokenKey": "MATIC", "name": "Polygon MATIC", "icon": <Avatar src='  https://prismic-io.s3.amazonaws.com/data-chain-link/19a58483-b100-4d09-ab0d-7d221a491090_BTC.svg'/>}
+      {"tokenKey": "NEO", "name": "NEO", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/1376.png'/>},
+      {"tokenKey": "GAS", "name": "GAS", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/1785.png'/>},
+      {"tokenKey": "BTC", "name": "Bitcoin", "icon": <Avatar src='https://prismic-io.s3.amazonaws.com/data-chain-link/19a58483-b100-4d09-ab0d-7d221a491090_BTC.svg'/>},
+      {"tokenKey": "ETH", "name": "Ethereum", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png'/>},
+      {"tokenKey": "BNB", "name": "Binance Coin", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png'/>},
+      {"tokenKey": "MATIC", "name": "Polygon MATIC", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png'/>}
     ];
 
     var priceData = [];
-    for (var i = 0; i < tokenConfigs.length; i++) {
-      let tokenConfig = tokenConfigs[i];
-      fetchPrice(tokenConfig.tokenKey).then(function(resp) {
-        tokenConfig.value = resp;
-        priceData.push(tokenConfig);
-        setData(priceData);
-      })
-    }
+    var sequence = [4, 2, 3, 1, 5, 0];
+    fetchPrice().then(function(resp) {
+        console.log(resp);
+        for (let index = 0; index < resp.length; index++) {
+          const element = resp[index];
+          const value = element[1];
+          const decimals = element[2];
+          
+          let tokenConfig = tokenConfigs[sequence[index]];
+          tokenConfig.value = value / Math.pow(10, decimals);
+          priceData.push(tokenConfig);
+  
+        }
+
+        setData(tokenConfigs);
+    })
   }, []);
 
   useEffect(() => {
