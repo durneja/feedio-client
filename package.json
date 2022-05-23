@@ -2,7 +2,7 @@
   "name": "feedio-client",
   "version": "1.0.0",
   "private": true,
-  "homepage": "./",
+  "homepage": "https://client.feedio.xyz",
   "resolutions": {
     "websocket-extensions": "^0.1.4",
     "node-forge": "^0.10.0",
