@@ -74,7 +74,7 @@ export default function Dashboard(props) {
 
   // get latest updated timestamp
   useEffect(() => {
-    const rpcClient = new rpc.RPCClient("http://seed1t4.neo.org:20332");
+    const rpcClient = new rpc.RPCClient("https://testnet1.neo.coz.io:443");
     const feedioScriptHash = "e0bd649469db432189f15cf9edbe5b1b8bd20a5f";
 
     const fetchLatestUpdatedTimeStamp = async (token) => {
@@ -84,7 +84,7 @@ export default function Dashboard(props) {
           "getLastUpdatedTime",[],
       );
 
-			return result.stack[0].value;
+                        return result.stack[0].value;
     }
 
     fetchLatestUpdatedTimeStamp().then(function(resp) {
@@ -106,7 +106,7 @@ export default function Dashboard(props) {
             <ListItem
               className={classes.list}
               key={item.name}
-            >  
+            >
               <ListItemAvatar style={{ display: 'flex' }}>
                 {item.icon}
               </ListItemAvatar>
