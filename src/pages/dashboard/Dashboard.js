@@ -44,12 +44,17 @@ export default function Dashboard(props) {
       {"tokenKey": "GAS", "name": "GAS", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/1785.png'/>},
       {"tokenKey": "BTC", "name": "Bitcoin", "icon": <Avatar src='https://prismic-io.s3.amazonaws.com/data-chain-link/19a58483-b100-4d09-ab0d-7d221a491090_BTC.svg'/>},
       {"tokenKey": "ETH", "name": "Ethereum", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png'/>},
+      {"tokenKey": "ADA", "name": "Cardano", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/2010.png'/>},
+      {"tokenKey": "SOL", "name": "Solana", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/6636.png'/>},
+      {"tokenKey": "DOT", "name": "Polkadot", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png'/>},
       {"tokenKey": "BNB", "name": "Binance Coin", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png'/>},
-      {"tokenKey": "MATIC", "name": "Polygon MATIC", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png'/>}
+      {"tokenKey": "LINK", "name": "Chainlink", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/1975.png'/>},
+      {"tokenKey": "MATIC", "name": "Polygon MATIC", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png'/>},
+      {"tokenKey": "UNI", "name": "Uniswap", "icon": <Avatar src='https://s2.coinmarketcap.com/static/img/coins/64x64/7083.png'/>}
     ];
 
     var priceData = [];
-    var sequence = [4, 2, 3, 1, 5, 0];
+    var sequence = [4, 7, 2, 6, 3, 1, 8, 9, 0, 5, 10]; //Response array received in alphabetical order
     fetchPrice().then(function(resp) {
         console.log(resp);
         for (let index = 0; index < resp.length; index++) {
