@@ -19,7 +19,7 @@ export default function Dashboard(props) {
   useEffect(() => {
     // trigger API call here on page load
 
-    const rpcClient = new rpc.RPCClient("http://seed1t4.neo.org:20332");
+    const rpcClient = new rpc.RPCClient("https://testnet1.neo.coz.io:443");
     const feedioScriptHash = "e0bd649469db432189f15cf9edbe5b1b8bd20a5f";
 
     const fetchPrice = async (token) => {
