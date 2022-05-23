@@ -22,6 +22,13 @@ export default makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
   },
+  feedioMainLayout: {
+    display: 'grid',
+    justifyContent: 'center',
+    '@media only screen and (max-width: 768px)' : {
+      gridTemplateColumns: 'repeat(1,1fr)'
+    }
+  },
   list: {
     height: 60,
     display: 'flex',

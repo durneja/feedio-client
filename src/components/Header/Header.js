@@ -3,11 +3,13 @@ import {
   AppBar,
   IconButton,
   Toolbar,
+  Avatar,
   CircularProgress,
 } from "@material-ui/core";
 import clsx from 'classnames';
 // styles
 import useStyles from "./styles";
+import FeedioLogo from '../../images/feedio_banner_trp.png';
 import StayCurrentLandscape from '@material-ui/icons/StayCurrentLandscape';
 
 // components
@@ -46,18 +48,18 @@ export default function Header(props) {
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
-        <IconButton>
+        {/* <IconButton>
           <StayCurrentLandscape htmlColor="#fff"/>
-        </IconButton>
-        <Typography variant="h6" weight="medium" className={classes.logotype}>
+        </IconButton> */}
+        <Avatar style={{ width: 100 }} src={FeedioLogo} />
+        {/* <Typography variant="h6" weight="medium" className={classes.logotype}>
           Feedio
-        </Typography>
+        </Typography> */}
 
         <div style={{ marginLeft: 'auto' }}>
           <form className={classes.form} noValidate>
             <Button
               // variant="contained"
-              color="#fff"
               className={clsx(classes.secondaryColor, {
                 [classes.disabled]: Object.keys(neoN3Data).length === 0,
               })}

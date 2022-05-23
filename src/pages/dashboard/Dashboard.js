@@ -98,9 +98,9 @@ export default function Dashboard(props) {
 
   return (
     <>
-      <div style={{ display: 'grid', justifyContent: 'center' }}>
+      <div className={classes.feedioMainLayout}>
         <p><b>Last updated at: {lastUpdatedTimeStamp ? <time datetime={lastUpdatedTimeStamp}>{lastUpdatedTimeStamp}</time> : 'Data not available'}</b></p>
-        <List style={{ display: 'flex', flexDirection: 'column', gridGap: 16, width: 600 }}>
+        <List style={{ display: 'flex', flexDirection: 'column', gridGap: 16, maxWidth: 600 }}>
         {data.map((item) => {
           return (
             <ListItem

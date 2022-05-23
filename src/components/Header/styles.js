@@ -14,8 +14,8 @@ export default makeStyles(theme => ({
     },
   },
   secondaryColor: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: 'white !important',
+    fontWeight: 'bold !important',
   },
   appBar: {
     width: "100vw",
